@@ -30,9 +30,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResp) => {
         // todo: throw exception
       })
       .catch((e) => {
-        sendResp({});
+        sendResp(null);
       });
   }
+
   if (msg.type === "fetch_prof") {
     const params = new URLSearchParams({
       name: msg.name,
@@ -46,6 +47,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResp) => {
           return;
         }
       })
-      .catch((e) => {});
+      .catch(null);
   }
 });
