@@ -1,5 +1,18 @@
-import { GPADivQuery, ListItemNameQuery, ListItemSubjectQuery } from "../const";
+import {
+  ContentQuery,
+  ListItemNameQuery,
+  ListItemSubjectQuery,
+} from "../const";
 import Tag from "~/components/Tag.svelte";
+import GPA from "~/components/GPA.svelte";
+import { LightGreen, LightRed } from "~/libs/const";
+
+type TagItem = [text: string, color: string];
+
+const demoTagList: Array<TagItem> = [
+  ["EASY", LightGreen],
+  ["HARD", LightRed],
+];
 
 export class ListItem {
   private element: HTMLElement;
@@ -22,27 +35,18 @@ export class ListItem {
   }
 
   public appendCourseInfo() {
-    const GPADiv = createGPADiv(this.gpa());
-    this.element.querySelector(GPADivQuery).appendChild(GPADiv);
+    // append GPA to course item
+    const GPAElem = appendGPADiv(this.gpa());
 
-    const tagDiv = document.createElement("div");
-    createTags(tagDiv, [
-      ["EASY", "#198754"],
-      ["HARD", "#dc3545"],
-    ]);
-
-    this.element.querySelector("div.right.grow").appendChild(tagDiv);
+    // append tags to course item
+    const tagElem = appendTagDiv(demoTagList);
 
     const content = document.createElement("div");
-    content.className = "row";
-    content.style.cssText = `
-      margin-top: 2px;
-      display: flex;
-      justify-content: space-between;
-    `;
-    content.appendChild(tagDiv);
-    content.appendChild(GPADiv);
-    this.element.querySelector("div.right.grow").appendChild(content);
+    content.className = "row eaza-item-content";
+
+    content.appendChild(tagElem);
+    content.appendChild(GPAElem);
+    this.element.querySelector(ContentQuery).appendChild(content);
   }
 
   public getSubject() {
@@ -62,10 +66,7 @@ export class ListItem {
   }
 }
 
-const createTags = (
-  parent: HTMLElement,
-  tags: Array<[text: string, color: string]>
-) => {
+const createTags = (parent: HTMLElement, tags: Array<TagItem>) => {
   for (const tag of tags) {
     new Tag({
       target: parent,
@@ -77,10 +78,19 @@ const createTags = (
   }
 };
 
-const createGPADiv = (gpa: string) => {
-  const div = document.createElement("div");
-  div.innerHTML = "GPA: " + gpa;
-  div.style.fontSize = "0.9rem";
-  div.style.float = "right";
-  return div;
+const appendTagDiv = (tagList: Array<TagItem>) => {
+  const tagDiv = document.createElement("div");
+  createTags(tagDiv, tagList);
+  return tagDiv;
+};
+
+const appendGPADiv = (gpa: string) => {
+  const GPADiv = document.createElement("div");
+  new GPA({
+    target: GPADiv,
+    props: {
+      gpa,
+    },
+  });
+  return GPADiv;
 };

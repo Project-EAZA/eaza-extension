@@ -16,3 +16,15 @@
   margin-right: 2px;
   color: #fff;
 }
+
+.eaza-gpa-display {
+  font-size: 0.9rem;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.eaza-item-content {
+  margin-top: 2px;
+  display: flex;
+  justify-content: space-between;
+}
