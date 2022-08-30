@@ -1,5 +1,5 @@
-import type { Cache } from './cache';
-import type { APIResponse } from './models';
+import type { Cache } from "./cache";
+import type { APIResponse } from "./models";
 
 export interface Fetcher<V> {
   get(params: URLSearchParams): Promise<V>;
@@ -18,8 +18,8 @@ export class CachedFetcher<V> implements Fetcher<V> {
       return this.cache.get(params);
     }
 
-    const response = await fetch(this.url + '?' + params, {
-      method: 'GET',
+    const response = await fetch(this.url + "?" + params, {
+      method: "GET",
     });
 
     const json: APIResponse<V> = await response.json();
