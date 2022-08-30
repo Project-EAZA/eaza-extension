@@ -1,4 +1,5 @@
 import { GPADivQuery, ListItemNameQuery, ListItemSubjectQuery } from "../const";
+import Tag from "~/components/Tag.svelte";
 
 export class ListItem {
   private element: HTMLElement;
@@ -25,14 +26,10 @@ export class ListItem {
     this.element.querySelector(GPADivQuery).appendChild(GPADiv);
 
     const tagDiv = document.createElement("div");
-    const tags = createTags([
+    createTags(tagDiv, [
       ["EASY", "#198754"],
       ["HARD", "#dc3545"],
     ]);
-
-    tags.forEach((tag) => {
-      tagDiv.appendChild(tag);
-    });
 
     this.element.querySelector("div.right.grow").appendChild(tagDiv);
 
@@ -66,39 +63,18 @@ export class ListItem {
 }
 
 const createTags = (
+  parent: HTMLElement,
   tags: Array<[text: string, color: string]>
-): Array<HTMLElement> => {
-  const result = [];
+) => {
   for (const tag of tags) {
-    const TagEle = createTag(tag[0], tag[1]);
-    result.push(TagEle);
+    new Tag({
+      target: parent,
+      props: {
+        text: tag[0],
+        color: tag[1],
+      },
+    });
   }
-  return result;
-};
-
-const createTag = (text: string, color: string = "black"): HTMLElement => {
-  const doc = document.createElement("span");
-  doc.innerHTML = text;
-  doc.style.cssText = `
-  display: inline-flex;
-  vertical-align: top;
-  -webkit-box-align: center;
-  align-items: center;
-  max-width: 100%;
-  line-height: 1.2;
-  outline: transparent solid 2px;
-  outline-offset: 2px;
-  border-radius: 5px;
-  min-height: 1.2rem;
-  min-width: 1.5rem;
-  font-size: 12px;
-  padding-inline-start: 5px;
-  padding-inline-end: 5px;
-  background: ${color};
-  margin-right: 2px;
-  color: #fff;
-  `;
-  return doc;
 };
 
 const createGPADiv = (gpa: string) => {

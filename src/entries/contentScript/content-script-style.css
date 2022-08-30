@@ -1,0 +1,18 @@
+.eaza-tag-span {
+  display: inline-flex;
+  vertical-align: top;
+  -webkit-box-align: center;
+  align-items: center;
+  max-width: 100%;
+  line-height: 1.2;
+  outline: transparent solid 2px;
+  outline-offset: 2px;
+  border-radius: 5px;
+  min-height: 1.2rem;
+  min-width: 1.5rem;
+  font-size: 12px;
+  padding-inline-start: 5px;
+  padding-inline-end: 5px;
+  margin-right: 2px;
+  color: #fff;
+}

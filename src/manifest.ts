@@ -1,6 +1,7 @@
 import pkg from "../package.json";
 
 const manifest = {
+  web_accessible_resources: ["content-script-style.css"],
   background: {
     scripts: ["src/entries/background/main.ts"],
     persistent: false,
@@ -9,6 +10,7 @@ const manifest = {
     {
       js: ["src/entries/contentScript/primary/main.ts"],
       matches: ["*://*/*"],
+      css: ["src/entries/contentScript/content-script-style.css"],
     },
   ],
   browser_action: {
