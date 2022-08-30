@@ -1,5 +1,8 @@
 import { CourseNameDivClass } from "../const";
 import { ListItem } from "../element/listItem";
+import { CourseItemHandler } from "./courseItemHandler";
+
+const handler = new CourseItemHandler();
 
 const observer = new MutationObserver((mutationList, observer) => {
   for (const mutation of mutationList) {
@@ -10,6 +13,7 @@ const observer = new MutationObserver((mutationList, observer) => {
         if (parent.parentElement) {
           const rootElem = parent.parentElement.parentElement.parentElement;
           const item = new ListItem(rootElem);
+          handler.handle(item);
         }
       }
     }
