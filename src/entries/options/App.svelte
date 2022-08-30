@@ -1,5 +1,5 @@
 <script lang="ts">
-import PageContent from "~/lib/PageContent.svelte";
+import PageContent from "~/components/PageContent.svelte";
 </script>
 
 <main>
