@@ -3,15 +3,13 @@ import {
   ListItemNameQuery,
   ListItemSubjectQuery,
 } from "../const";
-import Tag from "~/components/Tag.svelte";
-import GPA from "~/components/GPA.svelte";
+import CourseItem from "~/components/CourseItem.svelte";
 import { LightGreen, LightRed } from "~/libs/const";
-
-type TagItem = [text: string, color: string];
+import type { TagItem } from "~/libs/types";
 
 const demoTagList: Array<TagItem> = [
-  ["EASY", LightGreen],
-  ["HARD", LightRed],
+  { text: "EASY", color: LightGreen },
+  { text: "HARD", color: LightRed },
 ];
 
 export class ListItem {
@@ -35,17 +33,16 @@ export class ListItem {
   }
 
   public appendCourseInfo() {
-    // append GPA to course item
-    const GPAElem = appendGPADiv(this.gpa());
-
-    // append tags to course item
-    const tagElem = appendTagDiv(demoTagList);
-
     const content = document.createElement("div");
-    content.className = "row eaza-item-content";
 
-    content.appendChild(tagElem);
-    content.appendChild(GPAElem);
+    new CourseItem({
+      target: content,
+      props: {
+        tags: demoTagList,
+        gpa: this.gpa(),
+      },
+    });
+
     this.element.querySelector(ContentQuery).appendChild(content);
   }
 
@@ -65,32 +62,3 @@ export class ListItem {
     return (Math.random() * 4).toFixed(2);
   }
 }
-
-const createTags = (parent: HTMLElement, tags: Array<TagItem>) => {
-  for (const tag of tags) {
-    new Tag({
-      target: parent,
-      props: {
-        text: tag[0],
-        color: tag[1],
-      },
-    });
-  }
-};
-
-const appendTagDiv = (tagList: Array<TagItem>) => {
-  const tagDiv = document.createElement("div");
-  createTags(tagDiv, tagList);
-  return tagDiv;
-};
-
-const appendGPADiv = (gpa: string) => {
-  const GPADiv = document.createElement("div");
-  new GPA({
-    target: GPADiv,
-    props: {
-      gpa,
-    },
-  });
-  return GPADiv;
-};
