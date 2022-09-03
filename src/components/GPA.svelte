@@ -13,5 +13,7 @@
 </script>
 
 <div class="eaza-gpa-display" style="color:{getFontColor(gpa)}">
-  GPA: {gpa.toFixed(2)}
+  {#if gpa > 0}
+    GPA: {gpa.toFixed(2)}
+  {/if}
 </div>

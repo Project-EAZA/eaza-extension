@@ -4,7 +4,7 @@ import {
   ListItemSubjectQuery,
 } from "../const";
 import CourseItem from "~/components/CourseItem.svelte";
-import { LightGreen, LightRed } from "~/libs/const";
+import { LightGreen, LightRed, RepeatableTag, TagMap } from "~/libs/const";
 import type { TagItem } from "~/libs/types";
 import type { Course } from "~/libs/models";
 
@@ -45,7 +45,7 @@ export class ListItem {
     new CourseItem({
       target: content,
       props: {
-        tags: demoTagList,
+        tags: createTags(course),
         gpa: course.GPA,
       },
     });
@@ -69,3 +69,29 @@ export class ListItem {
     return (Math.random() * 4).toFixed(2);
   }
 }
+
+const createTags = (course: Course) => {
+  const list: Array<TagItem> = [];
+
+  if (course.breadths.length > 0) {
+    for (const b of course.breadths) {
+      if (b.Code !== "") {
+        list.push(TagMap[b.Code]);
+      }
+    }
+  }
+
+  if (course.ethnicStudies && course.ethnicStudies.Code !== "") {
+    list.push(TagMap[course.ethnicStudies.Code]);
+  }
+
+  if (course.generalEd && course.generalEd.Code !== "") {
+    list.push(TagMap[course.generalEd.Code]);
+  }
+
+  if (course.repeatable === "Y") {
+    list.push(RepeatableTag);
+  }
+
+  return list;
+};

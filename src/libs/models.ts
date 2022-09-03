@@ -30,21 +30,21 @@ export interface Professor {
 }
 
 export interface Breadth {
-  description: string;
-  code: string;
+  Description: string;
+  Code: string;
 }
 
 export interface Level {
-  description: string;
-  code: string;
+  Description: string;
+  Code: string;
 }
 
 export interface GeneralEd {
-  description: string;
-  code: string;
+  Description: string;
+  Code: string;
 }
 
 export interface EthnicStudies {
-  description: string;
-  code: string;
+  Description: string;
+  Code: string;
 }
