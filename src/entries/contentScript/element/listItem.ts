@@ -6,6 +6,7 @@ import {
 import CourseItem from "~/components/CourseItem.svelte";
 import { LightGreen, LightRed } from "~/libs/const";
 import type { TagItem } from "~/libs/types";
+import type { Course } from "~/libs/models";
 
 const demoTagList: Array<TagItem> = [
   { text: "EASY", color: LightGreen },
@@ -29,17 +30,23 @@ export class ListItem {
     const splitted = subjectStr.split(" ");
 
     this.number = parseInt(splitted[splitted.length - 1]);
-    this.subject = splitted.slice(0, splitted.length - 1).join("");
+    this.subject = splitted
+      .slice(0, splitted.length - 1)
+      .join(" ")
+      .replace("&amp;", "&");
   }
 
-  public appendCourseInfo() {
+  public appendCourseInfo(course: Course) {
+    if (course == null) {
+      return;
+    }
     const content = document.createElement("div");
 
     new CourseItem({
       target: content,
       props: {
         tags: demoTagList,
-        gpa: this.gpa(),
+        gpa: course.GPA,
       },
     });
 

@@ -13,5 +13,5 @@
 </script>
 
 <div class="eaza-gpa-display" style="color:{getFontColor(gpa)}">
-  GPA: {gpa}
+  GPA: {gpa.toFixed(2)}
 </div>

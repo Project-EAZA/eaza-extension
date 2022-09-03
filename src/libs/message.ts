@@ -8,7 +8,7 @@ interface Message {
 export interface FetchCourseMessage extends Message {
   type: "fetch_course";
   number: number;
-  name: string;
+  subject: string;
 }
 
 export interface FetchProfMessage {
