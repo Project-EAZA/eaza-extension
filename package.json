@@ -30,6 +30,9 @@
     "web-ext": "^6.6.0"
   },
   "dependencies": {
+    "chart.js": "^3.9.1",
+    "svelte-chartjs": "^2.1.1",
+    "svelte-select": "^4.4.7",
     "typescript-lru-cache": "^2.0.0",
     "webextension-polyfill": "^0.9.0"
   },
