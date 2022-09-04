@@ -19,7 +19,7 @@ export class ListItem {
   private number: number;
   private subject: string;
 
-  constructor(element: HTMLElement) {
+  constructor(element: HTMLElement, onClick: (item: ListItem) => void) {
     this.element = element;
     this.name = this.element.querySelector(ListItemNameQuery).innerHTML.trim();
 
@@ -34,6 +34,11 @@ export class ListItem {
       .slice(0, splitted.length - 1)
       .join(" ")
       .replace("&amp;", "&");
+
+    // when click this item, fetch grades
+    this.element.onclick = () => {
+      onClick(this);
+    };
   }
 
   public appendCourseInfo(course: Course) {

@@ -2,9 +2,14 @@
   export let teachings: Array<Teaching>;
 
   import type { Grades, Teaching } from '~/libs/models';
-  import Chart from './Chart.svelte';
   import Select from 'svelte-select';
-  import { findAllInstructors, findAllTerms, getTerm } from '~/libs/utils';
+  import Chart from './Chart.svelte';
+  import {
+    findAllInstructors,
+    findAllTerms,
+    getTerm,
+    totalGrades,
+  } from '~/libs/utils';
 
   type SelectItem = { value: number; label: string };
   const instructors = findAllInstructors(teachings);
@@ -12,8 +17,8 @@
 
   const instructorItems: Array<SelectItem> = instructors
     .map((instructor) => ({
-      value: instructor.id,
-      label: instructor.name,
+      value: instructor.ID,
+      label: instructor.Name,
     }))
     .concat({ value: -1, label: 'All' });
 
@@ -23,13 +28,11 @@
 
   let selectedInstructor: SelectItem = { value: -1, label: 'All' };
   let selectedTerm: SelectItem = { value: -1, label: 'All' };
-  let grade: Grades = null;
+  let grade: Grades = totalGrades(teachings);
 </script>
 
-<div>
-  <div>
+<!-- <div>
     <Select value={selectedTerm} items={termItems} />
     <Select value={selectedInstructor} items={instructorItems} />
-  </div>
-  <Chart data={grade} />
-</div>
+  </div> -->
+<Chart data={grade} />

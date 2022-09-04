@@ -2,7 +2,7 @@ import browser from "webextension-polyfill";
 import { LRUCache } from "~/libs/cache";
 import { CachedFetcher } from "~/libs/fetcher";
 import type { RequestMessage } from "~/libs/message";
-import type { Course, Professor } from "~/libs/models";
+import type { Course, Instructor, Teaching } from "~/libs/models";
 
 console.log("background running!");
 
@@ -14,7 +14,13 @@ const courseFetcher = new CachedFetcher<Course>(
   "http://localhost:3000/v1/plugin/course",
   new LRUCache(50)
 );
-const profFetcher = new CachedFetcher<Professor>("", new LRUCache(50));
+
+const profFetcher = new CachedFetcher<Instructor>("", new LRUCache(50));
+
+const gradesFetcher = new CachedFetcher<Array<Teaching>>(
+  "http://localhost:3000/v1/plugin/grade",
+  new LRUCache(50)
+);
 
 // deal with request from content script
 chrome.runtime.onMessage.addListener((message, sender, sendResp) => {
@@ -46,12 +52,26 @@ chrome.runtime.onMessage.addListener((message, sender, sendResp) => {
     profFetcher
       .post(params)
       .then((res) => {
-        if (res.name === msg.name) {
+        if (res.Name === msg.name) {
           sendResp(res);
         }
       })
       .catch(null);
   }
+  if (msg.type === "fetch_grades") {
+    const params = new URLSearchParams({
+      number: msg.number + "",
+      abbr: msg.subject,
+    });
 
+    gradesFetcher
+      .get(params)
+      .then((res) => {
+        sendResp(res);
+      })
+      .catch((e) => {
+        sendResp(null);
+      });
+  }
   return true;
 });

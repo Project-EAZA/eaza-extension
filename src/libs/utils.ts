@@ -1,15 +1,25 @@
-import type { Instructor, Teaching } from './models';
+import { Grade, Instructor, Teaching } from "./models";
 
 export const findAllInstructors = (teachings: Array<Teaching>) => {
-  const instructors: Set<Instructor> = new Set();
+  const instructors: Map<number, Instructor> = new Map();
   for (const teaching of teachings) {
     for (const section of teaching.Sections) {
       for (const instructor of section.Instructors) {
-        instructors.add(instructor);
+        instructors.set(instructor.ID, instructor);
       }
     }
   }
   return Array.from(instructors.values());
+};
+
+export const totalGrades = (teachings: Array<Teaching>) => {
+  const grade = new Grade();
+  for (const teaching of teachings) {
+    for (const section of teaching.Sections) {
+      grade.add(section.Grades);
+    }
+  }
+  return grade;
 };
 
 export const findAllTerms = (teachings: Array<Teaching>) =>
@@ -27,5 +37,5 @@ export const getTerm = (term: number) => {
     return `Fall ${year}`;
   }
 
-  throw 'Unable to parse term';
+  throw "Unable to parse term";
 };

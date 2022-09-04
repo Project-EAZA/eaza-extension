@@ -17,8 +17,6 @@ export class CourseItemHandler {
   }
 
   private handleCourse(item: ListItem, course: Course) {
-    console.log(course);
-
     item.appendCourseInfo(course);
   }
 }

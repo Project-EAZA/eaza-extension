@@ -1,4 +1,7 @@
-export type RequestMessage = FetchCourseMessage | FetchProfMessage;
+export type RequestMessage =
+  | FetchCourseMessage
+  | FetchProfMessage
+  | FetchGradesMessage;
 type MessageType = "fetch_course" | "fetch_prof";
 
 interface Message {
@@ -14,4 +17,10 @@ export interface FetchCourseMessage extends Message {
 export interface FetchProfMessage {
   type: "fetch_prof";
   name: string;
+}
+
+export interface FetchGradesMessage {
+  type: "fetch_grades";
+  subject: string;
+  number: number;
 }
